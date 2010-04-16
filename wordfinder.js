@@ -1,15 +1,15 @@
 var wordfinder = {};
 
+wordfinder.SYMBOLS = ",':;".split('');
+
 wordfinder.stripSymbols = function(s) {
-	var symbols = ",':;".split('');
-	for (idx in symbols) {
-		match_idx = s.indexOf(symbols[idx]);
-		if (match_idx !== -1) {
+	for (idx in wordfinder.SYMBOLS) {
+		match_idx = s.indexOf(wordfinder.SYMBOLS[idx]);
+		if (match_idx > -1) {
 			return s.substr(0, match_idx);
-		} else {
-			return s;
-		}
+		} 
 	}
+	return s;
 };
 
 
@@ -21,7 +21,7 @@ wordfinder.finder = function(id) {
 		if (ps[child].innerHTML){
 			ps_words = ps[child].innerHTML.split(" ");
 			for (word_idx in ps_words) {
-				word = stripSymbols(ps_words[word_idx]);
+				word = wordfinder.stripSymbols(ps_words[word_idx]);
 				if (word_histogram[word] !== undefined) {
 					word_histogram[word] += 1;
 				} else {
@@ -45,4 +45,5 @@ wordfinder.showTopResults = function(word_histogram) {
 
 // right now this is limited to:
 // http://www.sfgate.com/cgi-bin/article.cgi?f=/c/a/2010/04/15/BAOE1CVFM5.DTL&tsp=1
-// try with wordfinder.showTopResults(wordfinder.finder('fontprefs_bottom')[1]);
+// try with
+wordfinder.showTopResults(wordfinder.finder('fontprefs_bottom')[1]);
